@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db": "node data/initDb.js",
+    "seed-profiles": "node data/seedProfiles.js",
+    "postinstall": "npm run init-db && npm run seed-profiles",
     "start": "node src/index.js"
   },
   "keywords": [],
