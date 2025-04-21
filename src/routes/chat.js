@@ -31,6 +31,8 @@ router.post('/', async (req, res, next) => {
         await contextManager.addTip(userId, tip);
     }
 
+    console.log("réponse : ", res)
+
     // 5. Retourner le résultat
     res.json({ aiResponse, score, tip });
   } catch (err) {
