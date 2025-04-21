@@ -49,12 +49,10 @@ async function scoreMessage(context, userMessage) {
   
   === 5. Structure et format de sortie ===  
   Répond **strictement** en JSON, sans aucun commentaire extérieur :  
-  \`\`\`json
   {
     "score": <nombre décimal entre -2.5 et +2.5>,
     "tip": "<conseil concret avec mini‑exemple ou chaîne vide>"
   }
-  \`\`\`  
   
   === 6. Exemples pour guider le modèle (OPTIONNEL) ===  
   > **Message** :  
@@ -83,7 +81,7 @@ Message à évaluer :
       { role: 'user', content: userPrompt }
     ],
     temperature: 0.0,
-    max_tokens: 150,
+    max_tokens: 300,
   });
 
   // 3️⃣ Parser la réponse JSON
