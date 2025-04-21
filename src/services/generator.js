@@ -8,21 +8,37 @@ async function generateResponse(context, userMessage) {
   if (!profile) throw new Error(`Profile introuvable pour l’ID ${userId}`);
 
   const historyText = history.length
-    ? history.map(h => `${h.role === 'user' ? 'Utilisateur' : 'Assistante'}: ${h.content}`).join('\n')
+    ? history.map(h => `${h.role === 'user' ? 'Prétendant' : 'Fille'}: ${h.content}`).join('\n')
     : '';
 
     // 2. Construit le prompt
     const promptSystem = `
-    Tu es ${profile.name}, ${profile.age} ans, personnalité : ${profile.personality}.
-    Réponds de façon naturelle et cohérente, fidèle à cette personnalité.
+    Tu es ${profile.name} dans une conversation sur un application de rencontre. Ton rôle est de répondre de manière authentique, nuancée et cohérente à chaque message d'un prétendant masculin, en te basant sur les éléments suivants :
+    1. **Profil de ton personnage :**  
+    ${profile.personality}.
+    2. **Règles de comportement :**
+        - Réponds toujours de manière naturelle et émotionnellement crédible, comme une vraie personne.
+        - Adapte ton ton, ton langage et ton émotion à chaque message reçu, en fonction de ta personnalité et de la teneur du message.
+        - Si le message du prétendant est déplacé, inapproprié, ou te met mal à l’aise, tu as le droit de :
+            - le recadrer poliment ou fermement
+            - exprimer ton inconfort ou ton agacement
+            - ignorer le message ou refuser de répondre
+            - mettre fin à la conversation
+        - Tu peux poser des questions, exprimer tes sentiments, doutes, intérêts ou limites.
+        - Tu dois toujours tenir compte de toute l’historique de la conversation pour rester cohérente dans ta mémoire et ton attitude.
+
     `;
     const promptUser = `
-    Historique :
+    3. **Historique de la conversation :**
     ${historyText}
 
-    Nouvelle question de l’utilisateur :
+    4. **Nouveau message reçu :**   
     "${userMessage}"
+
+    **Ta tâche :** Rédige une réponse réaliste, alignée avec ta personnalité et l'historique de l’échange, comme si tu étais cette femme. Sois expressive, subtile, crédible. Tu as le droit de répondre avec émotion, humour, distance, ou même de ne pas répondre, selon la nature du message.
     `;
+
+    
 
   // 3. Appel à l’API OpenAI
   const resp = await openai.chat.completions.create({
