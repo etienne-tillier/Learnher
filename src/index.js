@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const chatRouter = require('./routes/chat');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use('/api/chat', chatRouter);
 
 // Gestion des erreurs basique
